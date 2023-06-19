@@ -35,9 +35,11 @@ class Program
                     Console.WriteLine(prompt);
                     Console.Write("> ");
                     string response = Console.ReadLine();
+                    Console.WriteLine("What is your mood today using an emoji or single word? ");
+                    string myMood = Console.ReadLine();
                     string date = DateTime.Now.Date.ToString("MMM dd, yyyy");
 
-                    Entry entry = new Entry(date, prompt, response);
+                    Entry entry = new Entry(date, prompt, response, myMood);
                     journal.AddEntry(entry);
                     break;
                 case 2:

@@ -28,7 +28,7 @@ public class Journal
         List<string> records = new List<string>();
             foreach (Entry entry in entries)
             {
-                string entryAsCSV = $"{entry.date} | {entry.promptText} | {entry.entryText}";
+                string entryAsCSV = $"{entry.date} | {entry.promptText} | {entry.entryText} | {entry.mood}";
                 records.Add(entryAsCSV);
             }
 
@@ -44,7 +44,7 @@ public class Journal
         foreach(string record in records)
         {
             string[] splitString = record.Split('|');
-            Entry entry = new Entry(splitString[0], splitString[1], splitString[2]);
+            Entry entry = new Entry(splitString[0], splitString[1], splitString[2], splitString[3]);
 
             entries.Add(entry);
         }
