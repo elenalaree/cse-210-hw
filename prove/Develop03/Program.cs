@@ -11,8 +11,24 @@ class Program
         while (userInput != "quit")
         {
             Console.WriteLine(scripture.GetDisplayText());
-            Console.WriteLine("Press enter to continue or type quit to finish. ");
+            Console.WriteLine("Press enter to remove words, type 'show' to see more words, or type quit to finish. ");
             userInput = Console.ReadLine();
+            if (scripture.IsCompletelyHidden() == true)
+            {
+                Thread.Sleep(5000);
+                userInput = "quit";
+            }
+            else if (userInput == "show")
+            {
+                scripture.ShowRandomWords();
+                scripture.GetDisplayText();
+            }
+            else
+            {
+            scripture.HideRandomWords();
+            scripture.GetDisplayText();
+            }
+            
             Console.Clear();
         }
     }

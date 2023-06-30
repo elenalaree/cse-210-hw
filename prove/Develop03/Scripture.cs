@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 class Scripture
 {
@@ -12,7 +14,6 @@ class Scripture
         words = new List<Word>();
 
         List<string> allwords = _text.Split(' ').ToList();
-        HideRandomWords();
         foreach(string wordString in allwords)
         {
             Word newWord = new Word(wordString);
@@ -22,17 +23,33 @@ class Scripture
 
     public void HideRandomWords()
     {
-        List<int> selected = new List<int>();
-        int randIndex = -1;
+        int hidden_words = 0;
         do
         {
-        randIndex = random.Next(list.Count);
-        selected.Add(randIndex);
-        string randomNumber = list[randIndex];
-        
+            int randIndex = random.Next(words.Count);
+            if(!words[randIndex].GetIsHidden())
+            {
+            words[randIndex].HideThis();
+            hidden_words ++;
+            }
         }
-        while(selected.Contains(randIndex) == false);
-        Console.WriteLine("We got out.");
+        while((hidden_words < 2) && (!IsCompletelyHidden()));
+
+    }
+
+        public void ShowRandomWords()
+    {
+        int shown_words = 0;
+        do
+        {
+            int randIndex = random.Next(words.Count);
+            if(words[randIndex].GetIsHidden())
+            {
+            words[randIndex].ShowThis();
+            shown_words ++;
+            }
+        }
+        while(shown_words < 2 && (!IsCompletelyShown()));
 
     }
     public string GetDisplayText()
@@ -49,13 +66,47 @@ class Scripture
                 scriptureText += new string('_', word.GetDisplayText().Length) + " ";
             }
         }
+        string reference_text = reference.GetDisplayText();
 
-        return ($"{reference} {scriptureText}");
+        return $"{reference_text} {scriptureText}";
     }
 
     public bool IsCompletelyHidden()
     {
-        return true;
+        int hidden_count = 0;
+        foreach(Word word in words)
+            if (word.GetIsHidden() == true)
+            {
+                hidden_count++;
+            }
+        if (hidden_count == words.Count)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        
+    }
+
+        public bool IsCompletelyShown()
+    {
+        int shown_count = 0;
+        foreach(Word word in words)
+            if (word.GetIsHidden() == false)
+            {
+                shown_count++;
+            }
+        if (shown_count == words.Count)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        
     }
 }
 

@@ -25,7 +25,7 @@ public string GetDisplayText()
     string referenceDisplay = "";
     if(endVerse != 0)
     {
-        referenceDisplay = $"{book} {chapter}:{verse}--{endVerse}";
+        referenceDisplay = $"{book} {chapter}:{verse}-{endVerse}";
     }
     else
     {
