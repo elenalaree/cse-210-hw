@@ -2,37 +2,37 @@ using System.Diagnostics;
 
 public class Activity
 {
-    private string description, name;
+    private string _description, _name;
 
-    static int spinnerCounter, duration;
+    static int _spinnerCounter, _duration;
 
     public Activity()
     {
-        spinnerCounter = duration = 0;
+        _spinnerCounter = _duration = 0;
     }
 
     public void SetActivityName(string _activityName)
     {
-        name = _activityName;
+        _name = _activityName;
     }
 
-    public void SetDescription(string _description)
+    public void SetDescription(string _descrip)
     {
-        description = _description;
+        _description = _descrip;
     }
 
     public int GetDuration()
     {
-        return duration;
+        return _duration;
     }
     public void DisplayStartingMessage()
     {
-        Console.WriteLine($"Welcome to the {name}!");
+        Console.WriteLine($"Welcome to the {_name}!");
         Console.WriteLine("");
-        Console.WriteLine(description);
+        Console.WriteLine(_description);
         Console.WriteLine();
         Console.Write("How long, in seconds, do you want your session?");
-        duration = int.Parse(Console.ReadLine());
+        _duration = int.Parse(Console.ReadLine());
 
         Console.Clear();
         Console.WriteLine("Get ready...");
@@ -45,19 +45,19 @@ public class Activity
         Console.WriteLine("Well Done!");
         ShowSpinner(3);
         Console.WriteLine();
-        Console.WriteLine($"You have completed another {duration} of the {name}.");
+        Console.WriteLine($"You have completed another {_duration} of the {_name}.");
         ShowSpinner(5);
     }
 
-    public void ShowSpinner(int numSecondsToRun)
+    public void ShowSpinner(int _numSecondsToRun)
     {
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        stopwatch.Start();
+        Stopwatch _stopwatch = Stopwatch.StartNew();
+        _stopwatch.Start();
 
-        while (stopwatch.ElapsedMilliseconds / 1000 < numSecondsToRun)
+        while (_stopwatch.ElapsedMilliseconds / 1000 < _numSecondsToRun)
         {
-            spinnerCounter++;
-            switch (spinnerCounter % 4)
+            _spinnerCounter++;
+            switch (_spinnerCounter % 4)
             {
                 case 0: Console.Write("/"); break;
                 case 1: Console.Write("-"); break;
@@ -70,9 +70,9 @@ public class Activity
         Console.Write(" ");
     }
 
-    public void ShowCountDown(int numSecondsToRun)
+    public void ShowCountDown(int _numSecondsToRun)
     {
-        for(int i = numSecondsToRun; i >= 1; i--)
+        for(int i = _numSecondsToRun; i >= 1; i--)
         {
             Console.Write(string.Format("{0}", i));
             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);

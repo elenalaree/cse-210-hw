@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 
 class ReflectingActivity : Activity
@@ -34,43 +35,68 @@ class ReflectingActivity : Activity
     {
         DisplayStartingMessage();
         DisplayPrompt();
-        int interval = GetDuration() / 6;
-        ShowCountDown(interval);
-        for (int i = 0; i <= 2; i++)
+        int _interval = GetDuration();
+        Stopwatch _stopwatch = Stopwatch.StartNew();
+        _stopwatch.Start();
+        while (_stopwatch.ElapsedMilliseconds / 1000 < _interval)
         {
-            DisplayQuestion();
-            ShowSpinner(interval);
+                DisplayQuestion();
+                ShowSpinner(5);
         }
     }
 
     public string GetRandomPrompt()
     {
-        int index = random.Next(_prompts.Count);
-        string prompt = _prompts[index];
+        List<string> _usedPrompts = new();
+        string prompt;
+        if(_usedPrompts.Count == _prompts.Count)
+        {
+            _usedPrompts.Clear();
+        }
+        do
+        {
+            int randIndex = random.Next(_prompts.Count);
+                prompt = _prompts[randIndex];
+        }
+        while(_usedPrompts.Contains(prompt));
+        _usedPrompts.Add(prompt);
         return prompt;
     }
 
     public string GetRandomQuestion()
     {
-        int index = random.Next(_questions.Count); 
-        string question = _questions[index];
-        return question;
+
+
+        List<string> _usedQuestions = new();
+        string _question;
+        if(_usedQuestions.Count == _questions.Count)
+        {
+            _usedQuestions.Clear();
+        }
+        do
+        {
+            int randIndex = random.Next(_questions.Count);
+                _question = _questions[randIndex];
+        }
+        while(_usedQuestions.Contains(_question));
+        _usedQuestions.Add(_question);
+        return _question;
     }
 
     public void DisplayPrompt()
     {
-        string promptMe = GetRandomPrompt();
-        Console.WriteLine(promptMe);
+        string _promptMe = GetRandomPrompt();
+        Console.WriteLine(_promptMe);
     }
 
     public void DisplayQuestion()
     {
-        List<string> used = new List<string>();
-        string questMe = GetRandomQuestion();
-        bool usedBox = used.Contains(questMe);
-        if (usedBox == false){
+        List<string> _used = new List<string>();
+        string _questMe = GetRandomQuestion();
+        bool _usedBox = _used.Contains(_questMe);
+        if (_usedBox == false){
             
-        Console.WriteLine(questMe);
+        Console.WriteLine(_questMe);
 
         }
 

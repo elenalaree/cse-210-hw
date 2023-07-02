@@ -3,8 +3,8 @@ using System.Diagnostics;
 
 class ListingActivity : Activity
 {
-    Random random= new Random();
-    List<string> prompts = new()
+    Random _random= new Random();
+    List<string> _prompts = new()
     {
         "Who are people that you appreciate?",
         "What are personal strengths of yours?",
@@ -12,7 +12,7 @@ class ListingActivity : Activity
         "When have you felt the Holy Ghost this month?",
         "Who are some of your personal heroes?"
     };
-    private int count;
+    private int _count;
     public ListingActivity()
     {
         this.SetActivityName("Listing Activity");
@@ -22,39 +22,39 @@ class ListingActivity : Activity
     public void Run()
     {
         DisplayStartingMessage();
-        int interval = GetDuration() - 5;
+        int _interval = GetDuration() - 5;
         Console.WriteLine("Type as many answers as you can from the following prompt.");
-        GetListFromUser(interval);
-        Console.WriteLine($"You listed {count} things.");
+        GetListFromUser(_interval);
+        Console.WriteLine($"You listed {_count} things.");
         Thread.Sleep(5000);
         DisplayEndingMessage();
     }
 
     public void GetRandomPrompt()
     {
-        int index = random.Next(prompts.Count);
-        string prompt = prompts[index];
-        Console.WriteLine(prompt);
+        int _index = _random.Next(_prompts.Count);
+        string _prompt = _prompts[_index];
+        Console.WriteLine(_prompt);
         
     }
 
-    public void GetListFromUser(int interval_timer)
+    public void GetListFromUser(int _interval_timer)
     {
-        List<string> answers = new List<string>();
+        List<string> _answers = new List<string>();
         Console.WriteLine("");
         GetRandomPrompt();
         ShowCountDown(5);
         Console.WriteLine("");
-        int interval = interval_timer;
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        stopwatch.Start();
-        while (stopwatch.ElapsedMilliseconds / 1000 < interval)
+        int _interval = _interval_timer;
+        Stopwatch _stopwatch = Stopwatch.StartNew();
+        _stopwatch.Start();
+        while (_stopwatch.ElapsedMilliseconds / 1000 < _interval)
         {
             Console.Write(">");
-            string answer = Console.ReadLine();
-            answers.Add(answer);
+            string _answer = Console.ReadLine();
+            _answers.Add(_answer);
             
         }
-        count = answers.Count;
+        _count = _answers.Count;
     }
 }

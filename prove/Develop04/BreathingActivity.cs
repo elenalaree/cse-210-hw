@@ -11,15 +11,15 @@ class BreathingActivity : Activity
     public void Run()
     {
         DisplayStartingMessage();
-        int interval = GetDuration() / 6;
+        int _interval = GetDuration() / 6;
         for (int i = 0; i <= 2; i++)
         {
             Console.WriteLine("Breath in...");
-            Console.WriteLine(interval);
-            ShowCountDown(interval);
-                        Console.WriteLine("Breath out...");
-            Console.WriteLine(interval);
-            ShowCountDown(interval);
+            Console.WriteLine(_interval);
+            ShowCountDown(_interval);
+            Console.WriteLine("Breath out...");
+            Console.WriteLine(_interval);
+            ShowCountDown(_interval);
         }
     }
 }

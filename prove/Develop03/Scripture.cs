@@ -92,13 +92,13 @@ class Scripture
 
         public bool IsCompletelyShown()
     {
-        int shown_count = 0;
+        int _shown_count = 0;
         foreach(Word word in words)
             if (word.GetIsHidden() == false)
             {
-                shown_count++;
+                _shown_count++;
             }
-        if (shown_count == words.Count)
+        if (_shown_count == words.Count)
         {
             return true;
         }

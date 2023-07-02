@@ -22,7 +22,7 @@ class Reference
 
 public string GetDisplayText()
 {
-    string referenceDisplay = "";
+    string referenceDisplay;
     if(endVerse != 0)
     {
         referenceDisplay = $"{book} {chapter}:{verse}-{endVerse}";
