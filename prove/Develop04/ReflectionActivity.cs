@@ -25,6 +25,9 @@ class ReflectingActivity : Activity
         "What did you learn about yourself through this experience?",
         "How can you keep this experience in mind in the future?"
     };
+
+    List<string> _usedQuestions = new();
+    List<string> _usedPrompts = new();
     public ReflectingActivity()
     {
         this.SetActivityName("Reflecting Activity");
@@ -47,7 +50,6 @@ class ReflectingActivity : Activity
 
     public string GetRandomPrompt()
     {
-        List<string> _usedPrompts = new();
         string prompt;
         if(_usedPrompts.Count == _prompts.Count)
         {
@@ -65,9 +67,6 @@ class ReflectingActivity : Activity
 
     public string GetRandomQuestion()
     {
-
-
-        List<string> _usedQuestions = new();
         string _question;
         if(_usedQuestions.Count == _questions.Count)
         {
