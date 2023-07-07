@@ -1,7 +1,8 @@
+using System.IO;
 using System.Collections.Generic;
 using System;
 using System.Diagnostics;
-
+using Microsoft.VisualBasic;
 
 class ReflectingActivity : Activity
 {
@@ -36,8 +37,11 @@ class ReflectingActivity : Activity
 
     public void Run()
     {
+        LoadFromFile("questions.csv", _usedQuestions);
+        LoadFromFile("prompts.csv", _usedPrompts);
         DisplayStartingMessage();
         DisplayPrompt();
+        ShowSpinner(5);
         int _interval = GetDuration();
         Stopwatch _stopwatch = Stopwatch.StartNew();
         _stopwatch.Start();
@@ -46,6 +50,8 @@ class ReflectingActivity : Activity
                 DisplayQuestion();
                 ShowSpinner(5);
         }
+        SaveToFile("questions.csv", _usedQuestions);
+        SaveToFile("prompts.csv", _usedPrompts);
     }
 
     public string GetRandomPrompt()
@@ -90,14 +96,37 @@ class ReflectingActivity : Activity
 
     public void DisplayQuestion()
     {
-        List<string> _used = new List<string>();
         string _questMe = GetRandomQuestion();
-        bool _usedBox = _used.Contains(_questMe);
-        if (_usedBox == false){
-            
         Console.WriteLine(_questMe);
+    }
+    public void SaveToFile(string _file, List<string> _usedDummy)
+    {   
+        List<string> records = new List<string>();
+        foreach (string question in _usedDummy)
+        {
+            string entryAsCSV = $"{question}";
+            records.Add(entryAsCSV);
+        }
+        using(StreamWriter writer = new StreamWriter(_file, false))
+        {
+            foreach (string record in records)
+            {
+            writer.WriteLine(record);
+            }
 
         }
 
+    }
+
+
+
+    public void LoadFromFile(string _file, List<string> _usedDummy)
+    {
+        List<string> records = File.ReadAllLines(_file).ToList();
+        foreach(string record in records)
+        {
+            string line = record;
+            _usedDummy.Add(line);
+        }
     }
 }
