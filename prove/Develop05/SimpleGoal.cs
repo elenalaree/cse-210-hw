@@ -1,4 +1,4 @@
-using System.Data;
+using System;
 
 class SimpleGoal : Goal
 {
@@ -34,6 +34,7 @@ class SimpleGoal : Goal
     }
     public override string GetStringRepresentation()
     {
-        return "";
+        string _stringRep = string.Format("SimpleGoal:{0},{1},{2},{3}", _shortName, _description, _points, _isComplete);
+        return _stringRep;
     }
 }

@@ -1,0 +1,5 @@
+130
+SimpleGoal:make cookies,with friends,10,True
+EternalGoal:Read Scriptures,Every morning,5
+ChecklistGoal:Wake up early,At 6 am,10,300,7,1
+ChecklistGoal:Do projects,twice,5,100,2,2

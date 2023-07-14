@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using System;
 
 public class EternalGoal : Goal
 {
@@ -19,12 +19,13 @@ public class EternalGoal : Goal
 
         public override void GetDetailsString()
     {  
-        string sentence = ". [ ] {1}({2})";
+        string sentence = ". [ ] {0}({1})";
         Console.WriteLine(sentence, _shortName, _description);
     }
 
     public override string GetStringRepresentation()
     {
-        return "";
+        string _stringRep = string.Format("EternalGoal:{0},{1},{2}", _shortName, _description, _points);
+        return _stringRep;
     }
 }

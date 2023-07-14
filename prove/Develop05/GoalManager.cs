@@ -1,4 +1,6 @@
-using System.Diagnostics;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO; 
 
 public class GoalManager
 {
@@ -29,12 +31,12 @@ public class GoalManager
         };
     public void Start()
     {
-        string _allPoints = "You have {0} points.";
-        Console.WriteLine(_allPoints, _score);
-        Console.WriteLine();
+
         int userMenuInput = 0;
         while (userMenuInput != 6)
         {
+            DisplayPlayerInfo();
+            Console.WriteLine();
             foreach (string menuItem in menu)
             {
                 Console.WriteLine(menuItem);
@@ -49,10 +51,21 @@ public class GoalManager
                     CreateGoal();
                     break;
                 case 2:
-                    RecordEvent();
+                    ListGoalDetails();
+                    Thread.Sleep(2000);
                     break;
                 case 3:
-
+                    SaveGoals();
+                    break;
+                case 4:
+                    LoadGoals();
+                    break;
+                case 5:
+                    RecordEvent();
+                    break;
+                case 6:
+                    Console.WriteLine("See you Next time!");
+                    Thread.Sleep(2000);
                     break;
             }
         }
@@ -60,7 +73,8 @@ public class GoalManager
 
     public void DisplayPlayerInfo()
     {
-        Console.WriteLine(_score);
+        string _allPoints = "You have {0} points.";
+        Console.WriteLine(_allPoints, _score);
     }
 
     public void ListGoalDetails()
@@ -73,6 +87,7 @@ public class GoalManager
             goal_line.GetDetailsString();
             count++;
         }
+        Console.WriteLine();
     }
     public void CreateGoal()
     {
@@ -134,20 +149,70 @@ public class GoalManager
         _score += _awarded;
         string _goal = _goals[_modChoice].ToString();
         if( _goal == "ChecklistGoal"){
-            if(_goals[_modChoice].IsComplete()){
-                _score += _goals[_modChoice].GetBonus();
-            }
+            ChecklistGoal _checklistGoal = _goals[_modChoice] as ChecklistGoal;
+            int addBonus = _checklistGoal.GetBonus();
+            _score += addBonus;
         }
-        string _allPoints = "You now have {0} points.";
-        Thread.Sleep(5000);
+        Thread.Sleep(3000);
+
+    }
+    public void RecreateGoal(string goalType, string goal_line){
+        string[] split = goal_line.Split(',');
+        if(goalType == "SimpleGoal")
+        {
+            SimpleGoal _simpleGoal = new SimpleGoal(split[0], split[1], split[2]);
+            if(split[3] == "True")
+            {
+                _simpleGoal.IsComplete();
+            }
+            _goals.Add(_simpleGoal);
+        }
+        else if(goalType == "EternalGoal")
+        {
+            EternalGoal _eternalGoal = new EternalGoal(split[0], split[1], split[2]);
+            _goals.Add(_eternalGoal);
+        }
+        else if(goalType == "ChecklistGoal")
+        {
+            int bonus = int.Parse(split[3]);
+            int target = int.Parse(split[4]);
+            int complete = int.Parse(split[5]);
+
+            ChecklistGoal _checklistGoal = new ChecklistGoal(split[0], split[1], split[2], target, bonus);
+            _checklistGoal._amountComplete = complete;
+            _goals.Add(_checklistGoal);
+        }
 
     }
     public void SaveGoals()
     {
+        string _goalFile = "goals.txt";
+
+        using (StreamWriter outputFile = new StreamWriter(_goalFile))
+        {
+            outputFile.WriteLine(_score);
+            foreach (Goal goal_line in _goals)
+            {
+                outputFile.WriteLine(goal_line.GetStringRepresentation());
+            }
+        };
 
     }
     public void LoadGoals()
     {
+        string _goalFile = "goals.txt";
+        string[] lines = File.ReadAllLines(_goalFile);
 
+        foreach (string line in lines)
+        {
+            string[] split = line.Split(':');
+            if (split.Length > 1){
+                RecreateGoal(split[0], split[1]);
+            }
+            else{
+                _score = int.Parse(split[0]);
+            }
+            
+        }
     }
 }
