@@ -13,6 +13,7 @@ class Order
 
     public void PackingLabel(Order order)
     {
+        Console.WriteLine("Product Name  --  Product Id");
         foreach (Product product in _products)
         {
         Console.WriteLine($"{product.ProductName} -- {product.ProductId}");
